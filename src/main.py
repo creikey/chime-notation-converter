@@ -17,3 +17,14 @@ if len(argv) <= 2:
     for i, track in enumerate(midi.tracks):
         print(track.name + ", ", end='')
     print()
+
+target_tracks = argv[2:]
+
+track_name_to_track = {}
+for track in midi.tracks:
+    track_name_to_track[track.name] = track
+
+for track in target_tracks:
+    if not track in track_name_to_track.keys():
+        print(f"Unable to find track '{track}' in midi file")
+        exit(1)
