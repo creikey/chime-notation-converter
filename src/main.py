@@ -70,13 +70,20 @@ for track_name in target_tracks:
     cur_time = 0.0
     for msg in track:
         to_print = ""
-        if msg.type == "note_off":
+        if msg.type == "note_on":
             to_print = "__"
-        elif msg.type == "note_on":
+        elif msg.type == "note_off":
             if msg.note < 62 or msg.note > 78:
                 warning_messages.append(Warning(track.name, cur_time, f"Note {msg.note} is out of range"))
                 continue # skip over bad note
-            to_print = str(msg.note - 72).zfill(2)
+            to_print = str(msg.note - 62).zfill(2)
+
+        if msg.time % beat_length != 0:
+            warning_messages.append(Warning(track.name, cur_time, f"Time {msg.time} is not a whole number of beat length {beat_length}"))
+            continue # bad note, skip!
+
+        for _ in range(int(msg.time/beat_length)):
+            print(f"{to_print} ", end='')
 
         cur_time += msg.time
     track_name_to_length[track.name] = cur_time
