@@ -28,3 +28,9 @@ for track in target_tracks:
     if not track in track_name_to_track.keys():
         print(f"Unable to find track '{track}' in midi file")
         exit(1)
+
+for track in track_name_to_track.values():
+    print(f"{track.name}: ",end='')
+    for msg in track:
+        if msg.type == "note_on" or msg.type == "note_off":
+            print(msg)
