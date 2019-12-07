@@ -1,3 +1,8 @@
-import mido
+from mido import MidiFile
 
-print("Hello, world!")
+midi = MidiFile('christmas-is-you.mid')
+
+for i, track in enumerate(midi.tracks):
+    print(f"Track {i}: {track.name}")
+    for msg in track:
+        print(msg)
