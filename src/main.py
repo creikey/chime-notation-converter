@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 
-import sys
+from sys import argv
 from mido import MidiFile
 
-if len(sys.argv) <= 1:
+if len(argv) <= 1:
     print("First argument must be path to midi file")
     exit(1)
 
-midi = MidiFile('christmas-is-you.mid')
+midi = MidiFile(argv[1])
 
-track_names = []
+if len(argv) <= 2:
+    print("Remaining arguments must be midi track names to add to chime notation output")
 
-for i, track in enumerate(midi.tracks):
-    track_names.append(track.name)
+    print("\nAvailable tracks: ",end='')
 
-print("Available tracks: ",end='')
+    for i, track in enumerate(midi.tracks):
+        print(track.name + ", ", end='')
+    print()
